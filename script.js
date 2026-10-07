@@ -6,15 +6,15 @@ const ENEMY_MOVE_INTERVAL = 2;
 /*
   MAP
 
-  # wall
-  P player
-  N nanay
-  D tatay
-  A ate
-  K key
-  E exit
-  F food
-  M money
+  # = Wall
+  P = Player
+  N = Nanay
+  D = Tatay
+  A = Ate
+  K = Key
+  E = Exit
+  F = Food
+  M = Money
 */
 
 
@@ -82,145 +82,95 @@ const levels = [
 ];
 
 
-/* DOM */
+/* ===========================
+   DOM
+   =========================== */
 
 const titleScreen =
-  document.getElementById(
-    "title-screen"
-  );
+  document.getElementById("title-screen");
 
 const startGameButton =
-  document.getElementById(
-    "start-game-btn"
-  );
+  document.getElementById("start-game-btn");
 
 const levelIntro =
-  document.getElementById(
-    "level-intro"
-  );
+  document.getElementById("level-intro");
 
 const introLevel =
-  document.getElementById(
-    "intro-level"
-  );
+  document.getElementById("intro-level");
 
 const introTitle =
-  document.getElementById(
-    "intro-title"
-  );
+  document.getElementById("intro-title");
 
 const introDescription =
-  document.getElementById(
-    "intro-description"
-  );
+  document.getElementById("intro-description");
 
 const beginLevelButton =
-  document.getElementById(
-    "begin-level-btn"
-  );
+  document.getElementById("begin-level-btn");
 
 const gameBoard =
-  document.getElementById(
-    "game-board"
-  );
+  document.getElementById("game-board");
 
 const levelElement =
-  document.getElementById(
-    "level"
-  );
+  document.getElementById("level");
 
 const movesElement =
-  document.getElementById(
-    "moves"
-  );
+  document.getElementById("moves");
 
 const scoreElement =
-  document.getElementById(
-    "score"
-  );
+  document.getElementById("score");
 
 const timerElement =
-  document.getElementById(
-    "timer"
-  );
+  document.getElementById("timer");
 
 const objectiveText =
-  document.getElementById(
-    "objective-text"
-  );
+  document.getElementById("objective-text");
 
 const keyStatusElement =
-  document.getElementById(
-    "key-status"
-  );
+  document.getElementById("key-status");
 
 const collectibleStatusElement =
-  document.getElementById(
-    "collectible-status"
-  );
+  document.getElementById("collectible-status");
 
 const alertText =
-  document.getElementById(
-    "alert-text"
-  );
+  document.getElementById("alert-text");
 
 const restartButton =
-  document.getElementById(
-    "restart-btn"
-  );
+  document.getElementById("restart-btn");
 
 const homeButton =
-  document.getElementById(
-    "home-btn"
-  );
+  document.getElementById("home-btn");
 
 const resultModal =
-  document.getElementById(
-    "result-modal"
-  );
+  document.getElementById("result-modal");
 
 const modalIcon =
-  document.getElementById(
-    "modal-icon"
-  );
+  document.getElementById("modal-icon");
 
 const modalEyebrow =
-  document.getElementById(
-    "modal-eyebrow"
-  );
+  document.getElementById("modal-eyebrow");
 
 const modalTitle =
-  document.getElementById(
-    "modal-title"
-  );
+  document.getElementById("modal-title");
 
 const modalMessage =
-  document.getElementById(
-    "modal-message"
-  );
+  document.getElementById("modal-message");
 
 const finalMoves =
-  document.getElementById(
-    "final-moves"
-  );
+  document.getElementById("final-moves");
 
 const finalScore =
-  document.getElementById(
-    "final-score"
-  );
+  document.getElementById("final-score");
 
 const finalTime =
-  document.getElementById(
-    "final-time"
-  );
+  document.getElementById("final-time");
 
 const modalButton =
-  document.getElementById(
-    "modal-btn"
-  );
+  document.getElementById("modal-btn");
 
 
-/* STATE */
+/* ===========================
+   STATE
+   =========================== */
 
 let currentLevel = 0;
 
@@ -237,54 +187,36 @@ let exitPosition = {
 };
 
 let momEnemies = [];
-
 let dadEnemies = [];
-
 let ateEnemies = [];
 
-let keyCollected =
-  false;
+let keyCollected = false;
 
-let moves =
-  0;
+let moves = 0;
+let score = 0;
 
-let score =
-  0;
+let collectiblesCollected = 0;
+let totalCollectibles = 0;
 
-let collectiblesCollected =
-  0;
+let seconds = 0;
 
-let totalCollectibles =
-  0;
+let timerInterval = null;
+let timerStarted = false;
 
-let seconds =
-  0;
-
-let timerInterval =
-  null;
-
-let timerStarted =
-  false;
-
-let gameOver =
-  false;
-
-let levelCompleted =
-  false;
-
-let levelStarted =
-  false;
+let gameOver = false;
+let levelCompleted = false;
+let levelStarted = false;
 
 
-/* START */
+/* ===========================
+   START
+   =========================== */
 
 function startGame() {
 
-  score =
-    0;
+  score = 0;
 
-  currentLevel =
-    0;
+  currentLevel = 0;
 
   titleScreen.classList.add(
     "hidden"
@@ -296,11 +228,11 @@ function startGame() {
 }
 
 
-/* LEVEL PREP */
+/* ===========================
+   PREPARE LEVEL
+   =========================== */
 
-function prepareLevel(
-  levelIndex
-) {
+function prepareLevel(levelIndex) {
 
   currentLevel =
     levelIndex;
@@ -314,14 +246,14 @@ function prepareLevel(
 }
 
 
-/* INTRO */
+/* ===========================
+   INTRO
+   =========================== */
 
 function showLevelIntro() {
 
   const data =
-    levels[
-      currentLevel
-    ];
+    levels[currentLevel];
 
   introLevel.textContent =
     `LEVEL ${currentLevel + 1}`;
@@ -353,44 +285,35 @@ function beginLevel() {
 }
 
 
-/* LOAD */
+/* ===========================
+   LOAD LEVEL
+   =========================== */
 
 function loadLevelData() {
 
   stopTimer();
 
-  moves =
-    0;
+  moves = 0;
 
-  seconds =
-    0;
+  seconds = 0;
 
-  timerStarted =
-    false;
+  timerStarted = false;
 
-  keyCollected =
-    false;
+  keyCollected = false;
 
-  collectiblesCollected =
-    0;
+  collectiblesCollected = 0;
 
-  gameOver =
-    false;
+  gameOver = false;
 
-  levelCompleted =
-    false;
+  levelCompleted = false;
 
-  momEnemies =
-    [];
+  momEnemies = [];
 
-  dadEnemies =
-    [];
+  dadEnemies = [];
 
-  ateEnemies =
-    [];
+  ateEnemies = [];
 
-  totalCollectibles =
-    0;
+  totalCollectibles = 0;
 
   exitPosition = {
     row: 0,
@@ -398,14 +321,12 @@ function loadLevelData() {
   };
 
   map =
-    levels[
-      currentLevel
-    ]
-    .map
-    .map(
-      row =>
-        row.split("")
-    );
+    levels[currentLevel]
+      .map
+      .map(
+        row =>
+          row.split("")
+      );
 
   scanMap();
 
@@ -419,7 +340,9 @@ function loadLevelData() {
 }
 
 
-/* SCAN */
+/* ===========================
+   SCAN MAP
+   =========================== */
 
 function scanMap() {
 
@@ -439,9 +362,7 @@ function scanMap() {
         map[row][col];
 
 
-      if (
-        tile === "P"
-      ) {
+      if (tile === "P") {
 
         player = {
           row,
@@ -453,9 +374,7 @@ function scanMap() {
       }
 
 
-      if (
-        tile === "N"
-      ) {
+      if (tile === "N") {
 
         momEnemies.push({
           row,
@@ -467,9 +386,7 @@ function scanMap() {
       }
 
 
-      if (
-        tile === "D"
-      ) {
+      if (tile === "D") {
 
         dadEnemies.push({
           row,
@@ -481,9 +398,7 @@ function scanMap() {
       }
 
 
-      if (
-        tile === "A"
-      ) {
+      if (tile === "A") {
 
         ateEnemies.push({
           row,
@@ -495,9 +410,7 @@ function scanMap() {
       }
 
 
-      if (
-        tile === "E"
-      ) {
+      if (tile === "E") {
 
         exitPosition = {
           row,
@@ -521,7 +434,9 @@ function scanMap() {
 }
 
 
-/* IMAGE */
+/* ===========================
+   IMAGE CREATOR
+   =========================== */
 
 function createImage(
   src,
@@ -550,7 +465,9 @@ function createImage(
 }
 
 
-/* RENDER */
+/* ===========================
+   RENDER BOARD
+   =========================== */
 
 function renderBoard() {
 
@@ -578,7 +495,6 @@ function renderBoard() {
       tile.classList.add(
         "tile"
       );
-
 
       const value =
         map[row][col];
@@ -656,7 +572,7 @@ function renderBoard() {
       }
 
 
-      /* DOOR */
+      /* EXIT */
 
       if (
         row ===
@@ -713,7 +629,7 @@ function renderBoard() {
 
         tile.appendChild(
           createImage(
-            "assets/mom.png",
+            "assets/mom-chasing.png",
             "mom-sprite",
             "Nanay"
           )
@@ -744,7 +660,7 @@ function renderBoard() {
 
         tile.appendChild(
           createImage(
-            "assets/dad.png",
+            "assets/dad-chasing.png",
             "dad-sprite",
             "Tatay"
           )
@@ -818,7 +734,9 @@ function renderBoard() {
 }
 
 
-/* PLAYER */
+/* ===========================
+   PLAYER MOVEMENT
+   =========================== */
 
 function movePlayer(
   rowChange,
@@ -898,7 +816,7 @@ function movePlayer(
 
   if (
     moves %
-    ENEMY_MOVE_INTERVAL ===
+      ENEMY_MOVE_INTERVAL ===
     0
   ) {
 
@@ -914,7 +832,9 @@ function movePlayer(
 }
 
 
-/* PLAYER VALID */
+/* ===========================
+   PLAYER VALIDATION
+   =========================== */
 
 function canPlayerMoveTo(
   row,
@@ -933,22 +853,20 @@ function canPlayerMoveTo(
 
 
   return (
-    map[row][col] !==
-    "#"
+    map[row][col] !== "#"
   );
 }
 
 
-/* TILE EVENTS */
+/* ===========================
+   PLAYER TILE EVENTS
+   =========================== */
 
 function handlePlayerTile() {
 
   const value =
-    map[
-      player.row
-    ][
-      player.col
-    ];
+    map[player.row]
+      [player.col];
 
 
   if (
@@ -961,11 +879,8 @@ function handlePlayerTile() {
     score +=
       150;
 
-    map[
-      player.row
-    ][
-      player.col
-    ] =
+    map[player.row]
+      [player.col] =
       ".";
   }
 
@@ -979,11 +894,8 @@ function handlePlayerTile() {
     score +=
       75;
 
-    map[
-      player.row
-    ][
-      player.col
-    ] =
+    map[player.row]
+      [player.col] =
       ".";
   }
 
@@ -997,18 +909,17 @@ function handlePlayerTile() {
     score +=
       100;
 
-    map[
-      player.row
-    ][
-      player.col
-    ] =
+    map[player.row]
+      [player.col] =
       ".";
   }
 
 }
 
 
-/* EXIT */
+/* ===========================
+   EXIT
+   =========================== */
 
 function checkExit() {
 
@@ -1032,7 +943,9 @@ function checkExit() {
 }
 
 
-/* ENEMIES */
+/* ===========================
+   ENEMY MOVEMENT
+   =========================== */
 
 function moveAllEnemies() {
 
@@ -1068,7 +981,9 @@ function moveAllEnemies() {
 }
 
 
-/* ENEMY GROUP */
+/* ===========================
+   ENEMY AI
+   =========================== */
 
 function moveEnemyGroup(
   enemies,
@@ -1183,25 +1098,19 @@ function moveEnemyGroup(
 
           const aDistance =
             distanceToPlayer(
-
               enemy.row +
-              a.row,
-
+                a.row,
               enemy.col +
-              a.col
-
+                a.col
             );
 
 
           const bDistance =
             distanceToPlayer(
-
               enemy.row +
-              b.row,
-
+                b.row,
               enemy.col +
-              b.col
-
+                b.col
             );
 
 
@@ -1244,7 +1153,9 @@ function moveEnemyGroup(
 }
 
 
-/* ENEMY VALID */
+/* ===========================
+   ENEMY VALIDATION
+   =========================== */
 
 function canEnemyMoveTo(
   row,
@@ -1263,8 +1174,7 @@ function canEnemyMoveTo(
 
 
   if (
-    map[row][col] ===
-    "#"
+    map[row][col] === "#"
   ) {
 
     return false;
@@ -1272,8 +1182,7 @@ function canEnemyMoveTo(
 
 
   if (
-    map[row][col] ===
-    "K"
+    map[row][col] === "K"
   ) {
 
     return false;
@@ -1295,7 +1204,9 @@ function canEnemyMoveTo(
 }
 
 
-/* DISTANCE */
+/* ===========================
+   DISTANCE
+   =========================== */
 
 function distanceToPlayer(
   row,
@@ -1321,7 +1232,9 @@ function distanceToPlayer(
 }
 
 
-/* COLLISION */
+/* ===========================
+   COLLISION
+   =========================== */
 
 function checkEnemyCollision() {
 
@@ -1391,7 +1304,9 @@ function checkEnemyCollision() {
 }
 
 
-/* WIN */
+/* ===========================
+   WIN
+   =========================== */
 
 function completeLevel() {
 
@@ -1425,7 +1340,9 @@ function completeLevel() {
 }
 
 
-/* LOSE */
+/* ===========================
+   LOSE
+   =========================== */
 
 function loseGame(
   caughtBy
@@ -1455,7 +1372,9 @@ function loseGame(
 }
 
 
-/* MODAL */
+/* ===========================
+   RESULT MODAL
+   =========================== */
 
 function showResultModal(
   won,
@@ -1536,7 +1455,7 @@ function showResultModal(
 
     modalIcon.appendChild(
       createImage(
-        "assets/ate-chased.png",
+        "assets/player-caught-ate.png",
         "ate-caught-sprite",
         "Nahuli ni Ate"
       )
@@ -1565,7 +1484,7 @@ function showResultModal(
   }
 
 
-  /* DAD */
+  /* TATAY */
 
   if (
     caughtBy ===
@@ -1574,7 +1493,7 @@ function showResultModal(
 
     modalIcon.appendChild(
       createImage(
-        "assets/dad-chased.png",
+        "assets/player-caught-dad.png",
         "dad-caught-sprite",
         "Nahuli ni Tatay"
       )
@@ -1603,11 +1522,11 @@ function showResultModal(
   }
 
 
-  /* MOM */
+  /* NANAY */
 
   modalIcon.appendChild(
     createImage(
-      "assets/player-chased.png",
+      "assets/player-caught-mom.png",
       "player-caught-sprite",
       "Nahuli ni Nanay"
     )
@@ -1635,7 +1554,9 @@ function showResultModal(
 }
 
 
-/* OPEN */
+/* ===========================
+   OPEN MODAL
+   =========================== */
 
 function openModal() {
 
@@ -1655,7 +1576,9 @@ function openModal() {
 }
 
 
-/* MODAL BUTTON */
+/* ===========================
+   MODAL BUTTON
+   =========================== */
 
 function handleModalButton() {
 
@@ -1692,11 +1615,9 @@ function handleModalButton() {
   }
 
 
-  score =
-    0;
+  score = 0;
 
-  currentLevel =
-    0;
+  currentLevel = 0;
 
   titleScreen.classList.remove(
     "hidden"
@@ -1705,12 +1626,13 @@ function handleModalButton() {
 }
 
 
-/* RESTART */
+/* ===========================
+   RESTART
+   =========================== */
 
 function restartLevel() {
 
-  score =
-    0;
+  score = 0;
 
   loadLevelData();
 
@@ -1720,7 +1642,9 @@ function restartLevel() {
 }
 
 
-/* HOME */
+/* ===========================
+   HOME
+   =========================== */
 
 function returnHome() {
 
@@ -1753,7 +1677,9 @@ function returnHome() {
 }
 
 
-/* TIMER */
+/* ===========================
+   TIMER
+   =========================== */
 
 function startTimer() {
 
@@ -1797,7 +1723,9 @@ function stopTimer() {
 }
 
 
-/* UI */
+/* ===========================
+   UI
+   =========================== */
 
 function updateUI() {
 
@@ -1829,8 +1757,7 @@ function updateUI() {
   /* LEVEL 1 */
 
   if (
-    currentLevel ===
-    0
+    currentLevel === 0
   ) {
 
     alertText.textContent =
@@ -1850,8 +1777,7 @@ function updateUI() {
   /* LEVEL 2 */
 
   if (
-    currentLevel ===
-    1
+    currentLevel === 1
   ) {
 
     alertText.textContent =
@@ -1871,8 +1797,7 @@ function updateUI() {
   /* LEVEL 3 */
 
   if (
-    currentLevel ===
-    2
+    currentLevel === 2
   ) {
 
     alertText.textContent =
@@ -1891,7 +1816,9 @@ function updateUI() {
 }
 
 
-/* KEYBOARD */
+/* ===========================
+   KEYBOARD
+   =========================== */
 
 document.addEventListener(
   "keydown",
@@ -1942,18 +1869,17 @@ document.addEventListener(
 
 
     movePlayer(
-
       controls[key][0],
-
       controls[key][1]
-
     );
 
   }
 );
 
 
-/* D-PAD */
+/* ===========================
+   D-PAD
+   =========================== */
 
 document
   .querySelectorAll(
@@ -1988,15 +1914,12 @@ document
 
 
           movePlayer(
-
             controls[
               direction
             ][0],
-
             controls[
               direction
             ][1]
-
           );
 
         }
@@ -2006,7 +1929,9 @@ document
   );
 
 
-/* EVENTS */
+/* ===========================
+   EVENTS
+   =========================== */
 
 startGameButton.addEventListener(
   "click",
@@ -2038,6 +1963,8 @@ modalButton.addEventListener(
 );
 
 
-/* INITIAL */
+/* ===========================
+   INITIAL
+   =========================== */
 
 loadLevelData();
