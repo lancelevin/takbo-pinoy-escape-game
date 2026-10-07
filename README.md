@@ -6,7 +6,7 @@ Built with vanilla HTML, CSS, and JavaScript.
 
 ## Live Demo
 
-GitHub Pages link coming soon.
+[Play Takbo! Pinoy Escape Game](https://lancelevin.github.io/takbo-pinoy-escape-game/)
 
 ## About the Game
 
