@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Takbo! — Pinoy Escape Game</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+</head>
+
+<body>
+
+  <!-- TITLE SCREEN -->
+
+  <section
+    id="title-screen"
+    class="screen-overlay title-screen"
+  >
+    <div class="title-card">
+
+      <p class="retro-kicker">
+        ISANG PINOY KOMIKS ESCAPE GAME
+      </p>
+
+      <div class="sun-badge">
+        ☀
+      </div>
+
+      <h1 class="game-logo">
+        TAKBO!
+      </h1>
+
+      <p class="game-logo-sub">
+        Bago Ka Maabutan
+      </p>
+
+      <p class="title-copy">
+        Hanapin ang susi, kumuha ng baon,
+        at tumakas bago ka maabutan ng buong pamilya.
+      </p>
+
+      <div class="title-sticker-row">
+        <span>🏠 Bahay</span>
+        <span>🔑 Susi</span>
+        <span>🩴 Nanay</span>
+        <span>👨 Tatay</span>
+        <span>👩 Ate</span>
+      </div>
+
+      <button
+        id="start-game-btn"
+        class="primary-btn start-btn"
+        type="button"
+      >
+        SIMULAN ANG TAKBUHAN
+      </button>
+
+      <p class="title-controls">
+        Arrow Keys / WASD · Mobile controls supported
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- LEVEL INTRO -->
+
+  <section
+    id="level-intro"
+    class="screen-overlay level-intro hidden"
+  >
+    <div class="level-intro-card">
+
+      <p class="intro-small">
+        SUSUNOD NA EKSENA
+      </p>
+
+      <h2 id="intro-level">
+        LEVEL 1
+      </h2>
+
+      <p
+        id="intro-title"
+        class="intro-title"
+      >
+        Hala! Gising si Nanay!
+      </p>
+
+      <p
+        id="intro-description"
+        class="intro-description"
+      >
+        Kunin ang susi at makatakas.
+      </p>
+
+      <button
+        id="begin-level-btn"
+        class="primary-btn"
+        type="button"
+      >
+        TAKBO!
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- GAME -->
+
+  <main class="game-shell">
+    <section class="game-panel">
+
+      <header class="game-header">
+
+        <div class="header-copy">
+
+          <p class="eyebrow">
+            PINOY KOMIKS · FAMILY ESCAPE
+          </p>
+
+          <h1>
+            Takbo!
+          </h1>
+
+          <p class="subtitle">
+            Susi muna. Pinto pagkatapos.
+            Huwag magpahuli.
+          </p>
+
+        </div>
+
+        <div class="alert-badge">
+
+          <span class="alert-dot"></span>
+
+          <span id="alert-text">
+            NANAY ALERT
+          </span>
+
+        </div>
+
+      </header>
+
+
+      <!-- HUD -->
+
+      <section class="hud">
+
+        <article class="hud-card">
+          <span>Level</span>
+          <strong id="level">1</strong>
+        </article>
+
+        <article class="hud-card">
+          <span>Galaw</span>
+          <strong id="moves">0</strong>
+        </article>
+
+        <article class="hud-card">
+          <span>Puntos</span>
+          <strong id="score">0</strong>
+        </article>
+
+        <article class="hud-card">
+          <span>Oras</span>
+
+          <strong>
+            <span id="timer">0</span>s
+          </strong>
+        </article>
+
+      </section>
+
+
+      <!-- MISSION -->
+
+      <section class="mission-panel">
+
+        <div>
+
+          <p class="mission-label">
+            MISYON
+          </p>
+
+          <strong id="objective-text">
+            Hanapin ang susi bago ka makita ni Nanay.
+          </strong>
+
+        </div>
+
+        <div class="mission-meta">
+
+          <span id="key-status">
+            SUSI: WALA PA
+          </span>
+
+          <span id="collectible-status">
+            BAON: 0 / 0
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- BOARD -->
+
+      <section class="board-frame">
+
+        <div class="board-sign">
+          BAHAY NI NANAY
+        </div>
+
+        <div
+          id="game-board"
+          class="game-board"
+          aria-label="Takbo game board"
+        ></div>
+
+      </section>
+
+
+      <!-- LEGEND -->
+
+      <section class="legend">
+
+        <span>
+          <i class="legend-dot player-dot"></i>
+          Ikaw
+        </span>
+
+        <span>
+          <i class="legend-dot key-dot"></i>
+          Susi
+        </span>
+
+        <span>
+          <i class="legend-dot food-dot"></i>
+          Pagkain
+        </span>
+
+        <span>
+          <i class="legend-dot money-dot"></i>
+          Baon
+        </span>
+
+        <span>
+          <i class="legend-dot mom-dot"></i>
+          Nanay
+        </span>
+
+        <span>
+          <i class="legend-dot dad-dot"></i>
+          Tatay
+        </span>
+
+        <span>
+          <i class="legend-dot ate-dot"></i>
+          Ate
+        </span>
+
+        <span>
+          <i class="legend-dot exit-dot"></i>
+          Pinto
+        </span>
+
+      </section>
+
+
+      <!-- CONTROLS -->
+
+      <section class="controls-panel">
+
+        <div>
+
+          <p class="controls-title">
+            GALAW
+          </p>
+
+          <p class="controls-copy">
+            Arrow Keys / WASD
+          </p>
+
+        </div>
+
+        <div class="dpad">
+
+          <button
+            data-direction="up"
+            aria-label="Move up"
+          >
+            ▲
+          </button>
+
+          <div>
+
+            <button
+              data-direction="left"
+              aria-label="Move left"
+            >
+              ◀
+            </button>
+
+            <button
+              data-direction="down"
+              aria-label="Move down"
+            >
+              ▼
+            </button>
+
+            <button
+              data-direction="right"
+              aria-label="Move right"
+            >
+              ▶
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <div class="game-actions">
+
+        <button
+          id="restart-btn"
+          class="secondary-btn"
+          type="button"
+        >
+          Ulitin ang Level
+        </button>
+
+        <button
+          id="home-btn"
+          class="secondary-btn"
+          type="button"
+        >
+          Main Menu
+        </button>
+
+      </div>
+
+    </section>
+  </main>
+
+
+  <!-- RESULT MODAL -->
+
+  <div
+    id="result-modal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+
+    <div class="modal-card">
+
+      <div
+        id="modal-icon"
+        class="modal-icon"
+      ></div>
+
+      <p
+        id="modal-eyebrow"
+        class="modal-eyebrow"
+      >
+        NAKATAKAS!
+      </p>
+
+      <h2 id="modal-title">
+        Ligtas Ka!
+      </h2>
+
+      <p id="modal-message">
+        Hindi ka naabutan.
+      </p>
+
+      <div class="modal-stats">
+
+        <div>
+          <span>Galaw</span>
+          <strong id="final-moves">0</strong>
+        </div>
+
+        <div>
+          <span>Puntos</span>
+          <strong id="final-score">0</strong>
+        </div>
+
+        <div>
+          <span>Oras</span>
+
+          <strong>
+            <span id="final-time">0</span>s
+          </strong>
+        </div>
+
+      </div>
+
+      <button
+        id="modal-btn"
+        class="primary-btn modal-btn"
+        type="button"
+      >
+        Susunod na Level
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
